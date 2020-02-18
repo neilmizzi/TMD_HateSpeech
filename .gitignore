@@ -92,3 +92,4 @@ twint/twint/storage/__pycache__/elasticsearch.cpython-37.pyc
 twint/twint/storage/__pycache__/panda.cpython-37.pyc
 twint/twint/storage/__pycache__/write_meta.cpython-37.pyc
 twint/twint/storage/__pycache__/write.cpython-37.pyc
+.vscode/settings.json
