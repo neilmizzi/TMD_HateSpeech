@@ -69,3 +69,26 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+twint/test_twint.json
+twint/twint/__init__.pyc
+twint/twint/__version__.pyc
+twint/twint/config.pyc
+twint/twint/__pycache__/__init__.cpython-37.pyc
+twint/twint/__pycache__/__version__.cpython-37.pyc
+twint/twint/__pycache__/config.cpython-37.pyc
+twint/twint/__pycache__/datelock.cpython-37.pyc
+twint/twint/__pycache__/feed.cpython-37.pyc
+twint/twint/__pycache__/format.cpython-37.pyc
+twint/twint/__pycache__/get.cpython-37.pyc
+twint/twint/__pycache__/output.cpython-37.pyc
+twint/twint/__pycache__/run.cpython-37.pyc
+twint/twint/__pycache__/tweet.cpython-37.pyc
+twint/twint/__pycache__/url.cpython-37.pyc
+twint/twint/__pycache__/user.cpython-37.pyc
+twint/twint/__pycache__/verbose.cpython-37.pyc
+twint/twint/storage/__pycache__/__init__.cpython-37.pyc
+twint/twint/storage/__pycache__/db.cpython-37.pyc
+twint/twint/storage/__pycache__/elasticsearch.cpython-37.pyc
+twint/twint/storage/__pycache__/panda.cpython-37.pyc
+twint/twint/storage/__pycache__/write_meta.cpython-37.pyc
+twint/twint/storage/__pycache__/write.cpython-37.pyc
