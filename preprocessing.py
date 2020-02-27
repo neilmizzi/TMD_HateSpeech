@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 import re
 from nltk.stem import PorterStemmer
 
-class Preprocessing:
+class PreProcessing:
 
     stop_words = set(stopwords.words('english'))
     ps = PorterStemmer()
