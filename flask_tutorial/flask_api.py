@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, redirect, url_for
 app = Flask(__name__)
 
 # This code is obtained from following Flask TutorialPoint guide
 # URL: https://www.tutorialspoint.com/flask/index.htm
-# This script lists a number of applicable examples on how Flask works
+# This script lists a number of applicable examples on how Flask works and can be used in our app
 
 """INDEX PAGE"""
 @app.route('/')
@@ -32,6 +32,25 @@ def hello_name(name):
 def blog_post(postID):
     return 'Blog Numer %d' % postID
 
+
+
+"""REDIRECT EXAMPLES"""
+@app.route('/admin')
+def hello_admin():
+   return 'Hello Admin'
+
+
+@app.route('/guest/<guest>')
+def hello_guest(guest):
+   return 'Hello %s as Guest' % guest
+
+
+@app.route('/user/<name>')
+def hello_user(name):
+   if name =='admin':
+      return redirect(url_for('hello_admin'))
+   else:
+      return redirect(url_for('hello_guest',guest = name))
 
 
 # MAIN
