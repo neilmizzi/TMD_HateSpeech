@@ -3,14 +3,16 @@
 <html>
    <body>
       {%block main%}
-      <h1>Hello</h1>
-      <form action = "http://localhost:5000/search_results" method = "POST">
-         <p><label>Username</label>       <input type = "text" name="user"/></p>
-         <p><label>Tweet Limit</label>    <input type="number" name='limit'></p>
-         <p><label>From</label>           <input type="date" name='date_lower'></p>
-         <p><label>Until</label>          <input type="date" name='date_upper'></p>
-         <p><input type = "submit" value = "Search" /></p>
-      </form>
+      <div class='form-temp'>
+         <h2>Enter your victim's info</h2>
+         <form action = "http://localhost:5000/search_results" method = "POST">
+            <p><label for="user">Username</label>              <input type = "text" name="user"/></p>
+            <p><label for="limit">Tweet Limit</label>          <input type="number" name='limit'></p>
+            <p><label for="date_lower">From</label>            <input type="date" name='date_lower'></p>
+            <p><label for="date_upper">Until</label>           <input type="date" name='date_upper'></p>
+            <p><input type = "submit" value = "Search" /></p>
+         </form>
+      </div>
       {%endblock%}
    </body>
 </html>
