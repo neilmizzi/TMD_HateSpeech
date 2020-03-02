@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+<html>
+   <body>
+      <h1>Hello</h1>
+      <form action = "http://localhost:5000/search_form" method = "post">
+         <p><label>Username</label>       <input type = "text" name="user"/></p>
+         <p><label>Tweet Limit</label>    <input type="number" name='limit'></p>
+         <p><label>From</label>           <input type="date" name='date_lower'></p>
+         <p><label>Until</label>          <input type="date" name='date_upper'></p>
+         <p><input type = "submit" value = "Search" /></p>
+      </form>
+   </body>
+</html>
