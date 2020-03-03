@@ -19,17 +19,34 @@ def add_header(response):
     return response
 
 
+"""
+   INDEX PAGE
+"""
 @app.route('/')
 def search_form():
    return render_template('search_form.html')
 
 
+"""
+   RESULTS PAGE
+   -  Gets data from form on index
+
+   TODO
+   -  Retrieve tweets from twint_handler.py
+   -  Get prediction from NN/SVM
+   -  Pass appropriate params to search_results.html
+"""
 @app.route('/search_results',methods = ['POST', 'GET'])
 def search_results():
    if request.method == 'POST':
-      #TODO Data processing goes here
+      #TODO Twint Data Retrieval
+      #     Get Prediction
+      #     Pass params
       user = request.form['user']
       return render_template("search_results.html", user=user)
+   else:
+      # TODO Replace with 404 webpage
+      return render_template("search_results.html", user="NaN")
 
 
 if __name__ == '__main__':
