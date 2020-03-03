@@ -4,18 +4,19 @@
 <html>
    <body>
       {% block title %}
-      Results for {{ user }}
+         Results for {{ user }}
       {% endblock %}
+
       {% block main %}
-      <h1>The results for {{ user }} are as follows</h1>
-      <div id='results'>
-         <!--TODO Replace Table with appropriate code-->
-         <table align="center">
-            <th>           <td>Tweet</td>    <td>Result</td>   </th>
-            <tr><td>1</td> <td>Tweet A</td>  <td>OK</td>       </tr>
-            <tr><td>2</td> <td>Tweet B</td>  <td>Hateful</td>  </tr>
-         </table>
-      </div>
+         <h1>The results for {{ user }} are as follows</h1>
+         <div id='results'>
+            <!--TODO Replace Table with appropriate code-->
+            <table align="center">
+               <th>           <td>Tweet</td>    <td>Result</td>   </th>
+               <tr><td>1</td> <td>Tweet A</td>  <td>OK</td>       </tr>
+               <tr><td>2</td> <td>Tweet B</td>  <td>Hateful</td>  </tr>
+            </table>
+         </div>
       {% endblock %}
    </body>
 </html>
