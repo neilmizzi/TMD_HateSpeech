@@ -7,7 +7,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support
 
-MAX_LENGTH = 280 #max lenght of a tweet
+MAX_LENGTH = 280 # max length of a tweet
 CHARS = list(string.printable) #100
 
 DATA = pd.read_csv('/Users/b2077/PycharmProjects/Maincodes/TDM/labeled_data (1).txt')
@@ -57,9 +57,6 @@ def sentence_embedding(tweets:list, embedder):
             sentence.append(embedded_word)
 
         sum = np.array(sentence).sum(axis=0)
-        #
-        # for x in sum:
-        #     print(type(x))
 
         average_vector = [ elem / len(sentence) for elem in list(sum)]
 
@@ -69,15 +66,15 @@ def sentence_embedding(tweets:list, embedder):
 word_embedding_model = gensim.models.KeyedVectors.load_word2vec_format('/Users/b2077/PycharmProjects/Maincodes/oldd/properly structured/GoogleNews-vectors-negative300.bin', binary=True)
 
 embedded_tweets, unknown_words = sentence_embedding(TWEETS,word_embedding_model)
-#
+
 x_train, x_test, y_train, y_test = train_test_split(embedded_tweets, LABELS, test_size=0.2, random_state=0, shuffle = False)
-#
+
 classifier = svm.LinearSVC(loss='hinge', C=1.0)
-#
+
 classifier.fit(x_train,y_train)
-# #
-predicted_labels = classifier.predict(x_test)
-# #
+
+predicted_labels = classifier.predict(x_test) # this is the array of predictions with the labels
+
 print(predicted_labels)
 
 prec, recall, fscore, support = precision_recall_fscore_support(predicted_labels, y_test, average=None, labels=list(UNIQUE_LABELS))
