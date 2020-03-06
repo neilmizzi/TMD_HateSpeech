@@ -5,7 +5,7 @@ import copy
 import string
 import nest_asyncio
 from datetime import datetime
-from preprocessing import PreProcessing
+from preprocessing.preprocessing import PreProcessing
 
 
 
