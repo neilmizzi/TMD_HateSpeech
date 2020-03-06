@@ -1,6 +1,15 @@
 from flask import Flask, redirect, url_for, request, render_template
+import pandas as pd
 app = Flask(__name__)
 
+def get_urls():
+    df = pd.read_csv('Arkivji/trump.csv', sep=',')
+    urls = df.loc[:, "link"]
+    tweetlist = []
+    for url in urls:
+        url = url.split('/')
+        tweetlist.append(url[-1])
+    return tweetlist
 
 """
    CLEARS CACHE
@@ -19,34 +28,18 @@ def add_header(response):
     return response
 
 
-"""
-   INDEX PAGE
-"""
 @app.route('/')
 def search_form():
    return render_template('search_form.html')
 
 
-"""
-   RESULTS PAGE
-   -  Gets data from form on index
-
-   TODO
-   -  Retrieve tweets from twint_handler.py
-   -  Get prediction from NN/SVM
-   -  Pass appropriate params to search_results.html
-"""
 @app.route('/search_results',methods = ['POST', 'GET'])
 def search_results():
    if request.method == 'POST':
-      #TODO Twint Data Retrieval
-      #     Get Prediction
-      #     Pass params
+      #TODO Data processing goes here
       user = request.form['user']
-      return render_template("search_results.html", user=user)
-   else:
-      # TODO Replace with 404 webpage
-      return render_template("search_results.html", user="NaN")
+      tweetlist = get_urls()
+      return render_template("search_results.html", user=user, tweetlist=tweetlist[:5])
 
 
 if __name__ == '__main__':

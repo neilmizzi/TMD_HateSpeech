@@ -2,21 +2,65 @@
 
 <!doctype html>
 <html>
+<head>
+  <meta charset = "UTF-8">
+</head>
    <body>
       {% block title %}
-         Results for {{ user }}
+      Results for {{ user }}
       {% endblock %}
-
       {% block main %}
-         <h1>The results for {{ user }} are as follows</h1>
-         <div id='results'>
-            <!--TODO Replace Table with appropriate code-->
-            <table align="center">
-               <th>           <td>Tweet</td>    <td>Result</td>   </th>
-               <tr><td>1</td> <td>Tweet A</td>  <td>OK</td>       </tr>
-               <tr><td>2</td> <td>Tweet B</td>  <td>Hateful</td>  </tr>
-            </table>
-         </div>
+      <h1>The results for {{ user }} are as follows</h1>
+      <script sync src="https://platform.twitter.com/widgets.js"></script>
+
+
+      <!-- The embedder function will append tweets to this div element -->
+      <div id='tweets'></div>
+
+
+<!-- Possibly add this json function to a seperate json script -->
+<script>
+  var tweet_urls = {{ tweetlist | tojson }};
+  var tweetContainer = document.getElementById('tweets')
+  console.log(tweetContainer)
+
+  window.onload = (function(){
+    tweet_urls.forEach(element => {
+    // Make getElement
+
+    var tweet = document.createElement("div");
+    tweet.classList.add('tweet')
+
+    // Use url
+    twttr.widgets.createTweet(
+      element, tweet,
+      {
+        conversation : 'none',    // or all
+        cards        : 'hidden',  // or visible
+        linkColor    : '#cc0000', // default is blue
+        theme        : 'light'    // or dark
+      })
+    .then (function (el) {
+      tweetContainer.appendChild(tweet)
+      console.log(el)
+      console.log(element)
+      console.log(tweet)
+
+      el.contentDocument.querySelector(".footer").style.display = "none";
+    });
+  });
+});
+</script>
+
+      <div id='results'>
+         <!--TODO Replace Table with appropriate code-->
+         <table align="center">
+            <th>           <td>Tweet</td>    <td>Result</td>   </th>
+            <tr><td>1</td> <td>
+</td>  <td>OK</td>       </tr>
+            <tr><td>2</td> <td> </td>  <td>Hateful</td>  </tr>
+         </table>
+      </div>
       {% endblock %}
    </body>
 </html>
