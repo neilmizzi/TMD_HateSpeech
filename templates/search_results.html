@@ -9,18 +9,19 @@
       {% block title %}
       Results for {{ user }}
       {% endblock %}
+
       {% block main %}
       <h1>The results for {{ user }} are as follows</h1>
       <script sync src="https://platform.twitter.com/widgets.js"></script>
 
 
-      <!-- The embedder function will append tweets to this div element -->
+      <!-- The embedder function will append tweets to this div element 
       <div id='tweets'></div>
 
 
-<!-- Possibly add this json function to a seperate json script -->
+Possibly add this json function to a seperate json script
 <script>
-  var tweet_urls = {{ tweetlist | tojson }};
+  var tweet_urls = a;
   var tweetContainer = document.getElementById('tweets')
   console.log(tweetContainer)
 
@@ -50,15 +51,26 @@
     });
   });
 });
-</script>
+</script> -->
 
       <div id='results'>
          <!--TODO Replace Table with appropriate code-->
          <table align="center">
-            <th>           <td>Tweet</td>    <td>Result</td>   </th>
-            <tr><td>1</td> <td>
-</td>  <td>OK</td>       </tr>
-            <tr><td>2</td> <td> </td>  <td>Hateful</td>  </tr>
+            <th>
+              <td>Tweet</td>
+              <td>Link</td>
+              <td>Result</td>
+            </th>
+
+            {%for i, tweet, url in tweet_list%}
+            <tr>
+              <td>{{i+1}}</td>                    <!--index-->
+              <td>{{tweet}}</td>                  <!--Tweet itself-->
+              <td><a href={{url}}>link</a></td>   <!--URL-->
+              <td>Label</td>                      <!--Label-->
+            </tr>
+            {%endfor%}
+
          </table>
       </div>
       {% endblock %}

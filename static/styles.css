@@ -137,18 +137,17 @@ input {
   }
 
   table, th, td {
-    border: 1px solid black;
+    table-layout:fixed;
   }
 
   #results {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
   }
 
   #results td, #results th {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 6px;
   }
 
   #results tr:nth-child(even){background-color: #f2f2f2;}
@@ -159,7 +158,7 @@ input {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #4CAF50;
+    background-color: #34CACA;
     color: white;
   }
 
