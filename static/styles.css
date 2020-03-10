@@ -72,7 +72,7 @@ input {
       box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
       -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
       -webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
-  
+
   }
   .form-style-8 h2{
       background: #4D4D4D;
@@ -94,7 +94,7 @@ input {
   .form-style-8 input[type="url"],
   .form-style-8 input[type="password"],
   .form-style-8 textarea,
-  .form-style-8 select 
+  .form-style-8 select
   {
       box-sizing: border-box;
       -webkit-box-sizing: border-box;
@@ -114,7 +114,7 @@ input {
       resize:none;
       overflow: hidden;
   }
-  .form-style-8 input[type="button"], 
+  .form-style-8 input[type="button"],
   .form-style-8 input[type="submit"]{
       -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
       -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
@@ -130,35 +130,43 @@ input {
       text-decoration: none;
       text-transform: uppercase;
   }
-  .form-style-8 input[type="button"]:hover, 
+  .form-style-8 input[type="button"]:hover,
   .form-style-8 input[type="submit"]:hover {
       background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
       background-color:#34CACA;
   }
 
   table, th, td {
-    border: 1px solid black;
+    table-layout:fixed;
   }
 
   #results {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
   }
-  
+
   #results td, #results th {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 6px;
   }
-  
+
   #results tr:nth-child(even){background-color: #f2f2f2;}
-  
+
   #results tr:hover {background-color: #ddd;}
-  
+
   #results th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #45D6D6;
+    background-color: #34CACA;
     color: white;
+  }
+
+  #tweet {
+    width: 400px !important;
+  }
+
+  #tweet iframe {
+    border: none !important;
+    box-shadow: none !important;
   }

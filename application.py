@@ -1,6 +1,8 @@
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template, abort
+import pandas as pd
+from twint_handler import TwintHandler
+import pandas as pd
 app = Flask(__name__)
-
 
 """
    CLEARS CACHE
@@ -18,35 +20,63 @@ def add_header(response):
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
 
+@app.errorhandler(404)
+def page_not_found(error):
+   return render_template('404.html', title = '404'), 404
 
-"""
-   INDEX PAGE
-"""
+
 @app.route('/')
 def search_form():
    return render_template('search_form.html')
 
 
-"""
-   RESULTS PAGE
-   -  Gets data from form on index
+def get_tweet_info():
+   df = pd.read_csv('Arkivji/trump.csv', sep=',')
+   urls = df.loc[:, "link"]
+   # tweetlist = []
+   #  for url in urls:
+   #      url = url.split('/')
+   #      tweetlist.append(url[-1])
 
-   TODO
-   -  Retrieve tweets from twint_handler.py
-   -  Get prediction from NN/SVM
-   -  Pass appropriate params to search_results.html
-"""
+   tweet_text = df.loc[:, "tweet"]
+   return urls, tweet_text
+
+
+
 @app.route('/search_results',methods = ['POST', 'GET'])
 def search_results():
    if request.method == 'POST':
-      #TODO Twint Data Retrieval
-      #     Get Prediction
-      #     Pass params
+
+      # Get form input
       user = request.form['user']
-      return render_template("search_results.html", user=user)
-   else:
-      # TODO Replace with 404 webpage
-      return render_template("search_results.html", user="NaN")
+      limit = request.form['limit']
+      date_lower = request.form['date_lower']
+      date_upper = request.form['date_upper']
+      df = pd.DataFrame()
+
+      # Get tweets from Twint given parameters
+      twint_handler = TwintHandler()
+      try:
+         df = twint_handler.search_user(user, limit, date_lower, date_upper)
+         urls = df.loc[:, "link"]
+         tweet_text = df.loc[:, "tweet"]
+      except KeyError:
+         abort(404)
+      tweet_list = zip(
+         [i for i in range(len(tweet_text))], 
+         tweet_text,
+         urls
+         )
+
+      # TODO Add Label retrieval and processing
+
+      return render_template(
+         "search_results.html", 
+         user = user,  
+         tweet_list = tweet_list
+      )
+
+   abort(404)
 
 
 if __name__ == '__main__':
