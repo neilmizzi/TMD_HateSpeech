@@ -6,6 +6,7 @@ import string
 import nest_asyncio
 from datetime import datetime
 from preprocessing.preprocessing import PreProcessing
+import os
 
 
 
@@ -16,8 +17,9 @@ class TwintHandler:
 
 
     def search_user(self, user, tweet_limit = 1000, date_lim_lower = '2007-01-01 00:00:00', date_lim_upper = datetime.now().strftime("%Y-%m-%d %H:%M:%S")):
-
         # Set defaults in case of blank fields
+        if os.path.exists('./tweets.csv'):
+            os.remove('./tweets.csv')
         if user == '':
             raise Exception
         if tweet_limit == 0:
@@ -30,13 +32,15 @@ class TwintHandler:
         c.Limit = int(tweet_limit)         # No. of Tweet Limit
         c.Hide_output = True               # Hide Output
         c.Username = user                  # Username to look up
-        c.Pandas = True                    # Set config to return Pandas DataFrame
+        # c.Pandas = True                    # Set config to return Pandas DataFrame
+        c.Store_csv = True
+        c.Output = 'tweets.csv'
         c.Until = date_lim_upper           # Upper date limit bound
         c.Since = date_lim_lower           # Lower date limit bound
         twint.run.Search(c)                # Run Search
 
         # Return tweets
-        self.tweets = twint.storage.panda.Tweets_df
+        self.tweets = pd.read_csv('tweets.csv')
         return self.tweets
 
     # Return Pre-Processed Tweets
