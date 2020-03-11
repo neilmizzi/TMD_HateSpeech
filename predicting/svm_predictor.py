@@ -7,19 +7,20 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support
 
+#make this file callable functions for our application.py file
+#changetest
 MAX_LENGTH = 280 # max length of a tweet
 CHARS = list(string.printable) #100
 
-DATA = pd.read_csv('/Users/b2077/PycharmProjects/Maincodes/TDM/labeled_data (1).txt')
-TWEETS = list(DATA['tweet'].astype(str).values)
-LABELS = list(DATA['class'].values)
+labelling = pd.read_csv('modifiedcode (2)/labeled_data (1).txt')
+LABELS = list(labelling['class'].values)
 UNIQUE_LABELS = set(LABELS)
-print(list(UNIQUE_LABELS))
+TRAINING_TWEETS = labelling['tweet'].values
 
-print(len(UNIQUE_LABELS))
-print("Hate Speech:", LABELS.count(0))
-print("Offensive:", LABELS.count(1))
-print("neither:", LABELS.count(2))
+#make this csv link to the twintoutput we want to classify
+twintoutput = pd.read_csv('modifiedcode (2)/trump.csv')
+TWEETS = list(twintoutput['tweet'].astype(str).values)
+
 
 
 # def transform_tweets_into_embeddings(tweets,embedding_model):
@@ -52,7 +53,6 @@ def sentence_embedding(tweets:list, embedder):
                 embedded_word = embedder[word]
             else:
                 unknown_words += 1
-                print('unknown word')
                 embedded_word = [0] * 300
             sentence.append(embedded_word)
 
@@ -63,9 +63,9 @@ def sentence_embedding(tweets:list, embedder):
         embedded_tweets.append(average_vector)
     return embedded_tweets, unknown_words
 
-word_embedding_model = gensim.models.KeyedVectors.load_word2vec_format('/Users/b2077/PycharmProjects/Maincodes/oldd/properly structured/GoogleNews-vectors-negative300.bin', binary=True)
+word_embedding_model = gensim.models.KeyedVectors.load_word2vec_format('modifiedcode (2)/GoogleNews-vectors-negative300.bin', binary=True)
 
-embedded_tweets, unknown_words = sentence_embedding(TWEETS,word_embedding_model)
+embedded_tweets, unknown_words = sentence_embedding(TRAINING_TWEETS,word_embedding_model)
 
 x_train, x_test, y_train, y_test = train_test_split(embedded_tweets, LABELS, test_size=0.2, random_state=0, shuffle = False)
 
@@ -73,14 +73,17 @@ classifier = svm.LinearSVC(loss='hinge', C=1.0)
 
 classifier.fit(x_train,y_train)
 
-predicted_labels = classifier.predict(x_test) # this is the array of predictions with the labels
+list_of_tweets_to_predict = TWEETS
+embedded_tweets_to_predict, unknown_words_ = sentence_embedding(list_of_tweets_to_predict,word_embedding_model)
 
-print(predicted_labels)
+predicted_labels = classifier.predict(embedded_tweets_to_predict) # this is the array of predictions with the labels
 
-prec, recall, fscore, support = precision_recall_fscore_support(predicted_labels, y_test, average=None, labels=list(UNIQUE_LABELS))
-
-dataframe = pd.DataFrame([prec,recall,fscore], index = ['Precision','Recall', 'F-Score'], columns = ['hate speech', 'offensive', 'neither'])
-
-print(dataframe)
+print (len(predicted_labels))
+# only relevant when training with labeled input
+# prec, recall, fscore, support = precision_recall_fscore_support(predicted_labels, y_test, average=None, labels=list(UNIQUE_LABELS))
+#
+# dataframe = pd.DataFrame([prec,recall,fscore], index = ['Precision','Recall', 'F-Score'], columns = ['hate speech', 'offensive', 'neither'])
+#
+# print(dataframe)
 
 
