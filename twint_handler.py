@@ -40,6 +40,8 @@ class TwintHandler:
         twint.run.Search(c)                # Run Search
 
         # Return tweets
+        if not(os.path.exists('./tweets.csv')):
+            raise Exception
         self.tweets = pd.read_csv('tweets.csv')
         return self.tweets
 

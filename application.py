@@ -60,7 +60,7 @@ def search_results():
          df = twint_handler.search_user(user, limit, date_lower, date_upper)
          urls = df.loc[:, "link"]
          tweet_text = df.loc[:, "tweet"]
-      except KeyError:
+      except Exception:
          abort(404)
       tweet_list = zip(
          [i for i in range(len(tweet_text))], 
