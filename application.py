@@ -1,7 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, abort
 import pandas as pd
+from classifierrun import *
 from twint_handler import TwintHandler
-import pandas as pd
 app = Flask(__name__)
 
 """
@@ -23,7 +23,6 @@ def add_header(response):
 @app.errorhandler(404)
 def page_not_found(error):
    return render_template('404.html', title = '404'), 404
-
 
 @app.route('/')
 def search_form():
@@ -60,6 +59,7 @@ def search_results():
          df = twint_handler.search_user(user, limit, date_lower, date_upper)
          urls = df.loc[:, "link"]
          tweet_text = df.loc[:, "tweet"]
+
       except Exception:
          abort(404)
       tweet_list = zip(
@@ -69,11 +69,14 @@ def search_results():
          )
 
       # TODO Add Label retrieval and processing
+      classification = lstm_predictions()
+      print (classification)
 
       return render_template(
          "search_results.html", 
          user = user,  
-         tweet_list = tweet_list
+         tweet_list = tweet_list,
+         classification = classification
       )
 
    abort(404)

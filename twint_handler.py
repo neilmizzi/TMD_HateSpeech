@@ -49,7 +49,7 @@ class TwintHandler:
     def get_preprocessed_tweets(self):
         prep = PreProcessing()
         self.cleaned_tweets = copy.deepcopy(self.tweets)
-        for i in range(0, tweets.shape[0]):
+        for i in range(0, self.tweets.shape[0]):
             self.cleaned_tweets.at[i, 'tweet'] = prep.preprocess(self.cleaned_tweets.at[i, 'tweet'])
         return self.cleaned_tweets
 

@@ -78,7 +78,7 @@ embedded_tweets_to_predict, unknown_words_ = sentence_embedding(list_of_tweets_t
 
 predicted_labels = classifier.predict(embedded_tweets_to_predict) # this is the array of predictions with the labels
 
-print (len(predicted_labels))
+print(len(predicted_labels))
 # only relevant when training with labeled input
 # prec, recall, fscore, support = precision_recall_fscore_support(predicted_labels, y_test, average=None, labels=list(UNIQUE_LABELS))
 #
