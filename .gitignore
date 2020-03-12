@@ -99,3 +99,4 @@ __pycache__/twint_handler.cpython-37.pyc
 preprocessing/__pycache__/preprocessing.cpython-37.pyc
 .DS_Store
 tweets.csv
+*.bin
