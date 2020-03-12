@@ -29,15 +29,17 @@ class TwintHandler:
         if date_lim_upper == '':
             date_lim_upper = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         c = twint.Config()                  # Config File
-        c.Limit = int(tweet_limit)         # No. of Tweet Limit
-        c.Hide_output = True               # Hide Output
-        c.Username = user                  # Username to look up
-        # c.Pandas = True                    # Set config to return Pandas DataFrame
+        c.Limit = int(tweet_limit)          # No. of Tweet Limit
+        c.Hide_output = True                # Hide Output
+        c.Username = user                   # Username to look up
+
+        # c.Pandas = True                   # Set config to return Pandas DataFrame
         c.Store_csv = True
         c.Output = 'tweets.csv'
-        c.Until = date_lim_upper           # Upper date limit bound
-        c.Since = date_lim_lower           # Lower date limit bound
-        twint.run.Search(c)                # Run Search
+
+        c.Until = date_lim_upper            # Upper date limit bound
+        c.Since = date_lim_lower            # Lower date limit bound
+        twint.run.Search(c)                 # Run Search
 
         # Return tweets
         if not(os.path.exists('./tweets.csv')):
@@ -49,7 +51,7 @@ class TwintHandler:
     def get_preprocessed_tweets(self):
         prep = PreProcessing()
         self.cleaned_tweets = copy.deepcopy(self.tweets)
-        for i in range(0, tweets.shape[0]):
+        for i in range(0, self.tweets.shape[0]):
             self.cleaned_tweets.at[i, 'tweet'] = prep.preprocess(self.cleaned_tweets.at[i, 'tweet'])
         return self.cleaned_tweets
 
