@@ -10,25 +10,25 @@ from keras.preprocessing import sequence
 import itertools
 from keras.callbacks import EarlyStopping
 
-DATA = pd.read_csv('labeled_data (1).txt')
-TWEETS = DATA['tweet'].astype(str).values
-LABELS = DATA['class'].values
-UNIQUE_LABELS = set(LABELS)
+# training and evaluation data
+TRAIN_DATA = pd.read_csv('labeled_data (1).txt')
+TRAIN_TWEETS = TRAIN_DATA['tweet'].astype(str).values # training data
+TRAIN_LABELS = TRAIN_DATA['class'].values
+TRAIN_UNIQUE_LABELS = set(TRAIN_LABELS)
 
-#encode and pad tweets, labels are already coded in this data because they are ints
-#padded_encoded_tweets = [pad_tweet(get_one_hot(tweet)) for tweet in TWEETS] # this returns a list of all the tweets
-                                                                            # in the form of a 280 * 100 matrix
-# NOTE: I removed the one-hot encoding, simply mapping to integers
-# we need to look further into this
-integer_mapped_tweets = [map_to_ints(t) for t in TWEETS]
+#predict data - replace first none with pd.read_csv(filepath), second none with column name
+PREDICT_DATA, TWEET_COLUMN = None, None
+#PREDICT_TWEETS = PREDICT_DATA[TWEET_COLUMN].astype(str).values #comment out when filled in prediction data
 
-XX = merged = list(itertools.chain.from_iterable(integer_mapped_tweets)) #flattening nested list: making one list out of all the lists so we can use set()
+# integer mapping for the train data
+integer_mapped_tweets = [map_to_ints(t) for t in TRAIN_TWEETS]
+unique_characters = merged = list(itertools.chain.from_iterable(integer_mapped_tweets)) #flattening nested list: making one list out of all the lists so we can use set()
 
 # check how many letters their are in the tweets
-print(set(XX))
+print("Unique characters:",len(set(unique_characters)))
 
 #split test and train
-x_train, x_test, y_train, y_test = train_test_split(integer_mapped_tweets, LABELS, test_size=0.2, random_state=42)
+x_train, x_test, y_train, y_test = train_test_split(integer_mapped_tweets, TRAIN_LABELS, test_size=0.2, random_state=42)
 
 #split train data again for validation data
 x_train, x_validation, y_train, y_validation = train_test_split(x_train,y_train,test_size=0.2, random_state=42)
@@ -40,13 +40,13 @@ x_test = sequence.pad_sequences(x_test, maxlen=maxlen)
 x_validation = sequence.pad_sequences(x_validation,maxlen=maxlen)
 
 # remove to run on full data
-# x_train = x_train[0:100]
-# x_test = x_test[0:10]
-# y_train = y_train[0:100]
-# y_test = y_test[0:10]
-#
-# x_validation = x_validation[0:10]
-# y_validation = y_validation[0:10]
+x_train = x_train[0:100]
+x_test = x_test[0:10]
+y_train = y_train[0:100]
+y_test = y_test[0:10]
+
+x_validation = x_validation[0:10]
+y_validation = y_validation[0:10]
 
 print('x_train shape:', x_train.shape)
 print('x_test shape:', x_test.shape)
@@ -56,42 +56,61 @@ print(y_validation.shape)
 print(y_test.shape)
 
 
-#setting up a model parameters
-num_neurons = 50 # arbitrary number needs to
-batch_size = 32 # also kinda arbitrary
-epochs = 5 # arbitrary, we should lookinto auto stopping epochs
-max_features =  max(set(XX)) + 1 #len(set(XX))    # highest integer map number will give us the max len + 1 does not work because it skips a number in integer coding
+class LSTM_model:
+    def __init__(self,n_neurons = 50 ,batch_size = 32,epochs = 5,max_features = max(set(unique_characters)) + 1 ,input_length = 280,output_dim =128, bidirectional = True, \
+                 drop_out = 0.5,num_classes = 3, activation_function = 'softmax', loss_function = 'sparse_categorical_crossentropy', \
+                 optimiser = 'rmsprop'):
+        self.n_neurons = n_neurons
+        self.batch_size = batch_size
+        self.epochs = epochs
+        self.max_features = max_features
+        # self.input_dim = max_features
+        self.input_length = input_length
+        self.output_dim = output_dim
+        self.biderectional = bidirectional
+        self.drop_out = drop_out
+        self.num_classes = num_classes
+        self.activation_function = activation_function
+        self.loss_function = loss_function
+        self.optimiser = optimiser
+        self.model = Sequential()
 
-#model itself
-model = Sequential()
-# copied the next two lines from Keras's sentiment-LSTM tutorial
-model.add(Embedding(input_dim=max_features, input_length= 280, output_dim=128))
-# model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
 
-#making it bi-directional
-model.add(Bidirectional(LSTM(64)))
-model.add(Dropout(0.5))
+    def initialise_model(self):
+        self.model.add(Embedding(input_dim=self.max_features, input_length= self.input_length, output_dim=self.output_dim))
+        if self.biderectional == False:
+            self.model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
+            self.model.add(LSTM(self.num_neurons,return_sequences=True,input_shape=(MAX_LENGTH,len(CHARS)))) #MAXLENGTH AND CHARS are constants from the onehotencoding.py
+            self.model.add(LSTM(self.num_neurons,return_sequences=True)) #MAXLENGTH AND CHARS are constants from the onehotencoding.py
+            self.model.add(Dropout(.2))
+            self.model.add(Flatten())
+        else:
+            self.model.add(Bidirectional(LSTM(64)))
+            self.model.add(Dropout(0.5))
 
 
-#model.add(LSTM(num_neurons,return_sequences=True,input_shape=(MAX_LENGTH,len(CHARS)))) #MAXLENGTH AND CHARS are constants from the onehotencoding.py
-#model.add(LSTM(num_neurons,return_sequences=True)) #MAXLENGTH AND CHARS are constants from the onehotencoding.py
-#model.add(Dropout(.2))
-#model.add(Flatten())
-model.add(Dense(3, activation='softmax')) # 3 refers to the number of categories
+        self.model.add(Dense(self.num_classes, activation=self.activation_function)) # 3 refers to the number of categories
+        self.model.compile(self.optimiser, self.loss_function, metrics=['accuracy'])
 
-# NOTE: binary_crossentropy is for binary prediction, you should have categorical_crossentropy at least
+        self.model.fit(x_train, y_train, batch_size=self.batch_size, epochs=self.epochs, validation_data=(x_validation, y_validation))
 
-model.compile('rmsprop','sparse_categorical_crossentropy',metrics=['accuracy'])
+        self.model.summary()
 
-model.summary()
 
-model.fit(x_train,y_train,batch_size=batch_size,epochs=epochs, validation_data=(x_validation,y_validation))
+    def evaluate_model(self,test_x,test_y):
+        self.scores = self.model.evaluate(test_x,test_y, verbose=1)
+        print('Test loss:', self.scores[0])
+        print('Test accuracy:', self.scores[1])
 
-scores = model.evaluate(x_test, y_test, verbose=1)
+    def transform_prediction_data(self,prediction_data: list):
+        self.prediction_data = [map_to_ints(t) for t in prediction_data]
+        self.prediction_data = sequence.pad_sequences(self.prediction_data, maxlen=maxlen)
 
-predictions = model.predict_classes(x_test)
+    def predict_scraped_data_labels(self):
+        predictions = self.model.predict_classes(self.prediction_data)
+        return predictions
 
-print(predictions)
+    def predict_scraped_data_scores(self):
+        scores = self.model.predict(self.prediction_data)
+        return scores
 
-print('Test loss:', scores[0])
-print('Test accuracy:', scores[1])
