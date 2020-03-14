@@ -12,10 +12,10 @@ def deal_with_unknown_characters(tweet):
     for char in tweet[:]:
 
         if char not in list(string.printable):
-            print(char)
+
 
             tweet = tweet.replace(char,"")
-            print(tweet)
+
 
     return tweet
 
