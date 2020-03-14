@@ -6,7 +6,7 @@ from training_lstm import *
 PARAMETER_OPTIONS_DICT = {
     'learning_rate' : numpy.arange(0.001,0.25,0.003),
     'number_of_neurons' : [i for i in range(16,129,16)],
-    'batch_size' : [i for i in range(5,91,15) ],
+    'batch_size' : [i for i in range(15,91,6) ],
     'drop_out' : numpy.arange(0.1,0.8,0.05) ,
     # 'activation_functions' : ['tanh','softmax','relu'],
     # 'optimiser' : ['adam', 'rmsprop', 'adagrad']
@@ -41,7 +41,6 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
 
         model.initialise_model()
 
-        iterations = 1
 
         for i in range(iterations_per_setting): # statistical significance?
             model.train_model()
@@ -61,7 +60,7 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
     return max_acc, best_options
 
 
-max_acc, best_options = run_experiments(PARAMETER_OPTIONS_DICT,10,x_test,y_test)
+max_acc, best_options = run_experiments(PARAMETER_OPTIONS_DICT,10, 3,x_test,y_test)
 
 print(max_acc)
 
