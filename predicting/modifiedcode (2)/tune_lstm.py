@@ -35,7 +35,7 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
 
         drop_out =  hyper_parameter_options['drop_out'][numpy.random.randint(0,len(hyper_parameter_options['drop_out']))]
 
-        model = model(n_neurons= number_of_neurons, learning_rate = learning_rate, batch_size = batch_size, drop_out = drop_out)
+        model = LSTM_model(maxlen,n_neurons= number_of_neurons, learning_rate = learning_rate, batch_size = batch_size, drop_out = drop_out)
 
         accuracy = []
 
@@ -43,12 +43,12 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
 
 
         for i in range(iterations_per_setting): # statistical significance?
-            model.train_model()
+            model.train_model(x_train,y_train,x_validation,y_validation)
             results = model.model.evaluate(test_x,test_y, verbose=1)
             acc = results[1]
             accuracy.append(acc)
 
-        avg_accuracy = sum(accuracy) / len(iterations_per_setting)
+        avg_accuracy = sum(accuracy) / iterations_per_setting
 
         if avg_accuracy > max_acc:
             max_acc = avg_accuracy
@@ -60,7 +60,7 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
     return max_acc, best_options
 
 
-max_acc, best_options = run_experiments(PARAMETER_OPTIONS_DICT,10, 3,x_test,y_test)
+max_acc, best_options = run_experiments(PARAMETER_OPTIONS_DICT,10, 2,x_test,y_test)
 
 print(max_acc)
 
