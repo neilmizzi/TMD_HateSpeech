@@ -62,21 +62,22 @@ def search_results():
 
       except Exception:
          abort(404)
-      tweet_list = zip(
-         [i for i in range(len(tweet_text))], 
-         tweet_text,
-         urls
-         )
 
-      # TODO Add Label retrieval and processing
+      # TODO add flask visualization (bokeh pycharts etc)
       classification = lstm_predictions()
-      print (classification)
+      results = restructure_results(classification)
+
+      tweet_list = zip(
+         [i for i in range(len(tweet_text))],
+         tweet_text,
+         urls,
+         results
+         )
 
       return render_template(
          "search_results.html", 
          user = user,  
-         tweet_list = tweet_list,
-         classification = classification
+         tweet_list = tweet_list
       )
 
    abort(404)

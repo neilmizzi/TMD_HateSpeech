@@ -15,7 +15,7 @@
       <script sync src="https://platform.twitter.com/widgets.js"></script>
 
 
-      <!-- The embedder function will append tweets to this div element 
+      <!-- The embedder function will append tweets to this div element
       <div id='tweets'></div>
 
 
@@ -62,12 +62,12 @@ Possibly add this json function to a seperate json script
               <td>Result</td>
             </th>
 
-            {%for i, tweet, url in tweet_list%}
+            {%for i, tweet, url, results in tweet_list%}
             <tr>
               <td>{{i+1}}</td>                    <!--index-->
               <td>{{tweet}}</td>                  <!--Tweet itself-->
               <td><a href={{url}}>link</a></td>   <!--URL-->
-              <td>Label</td>                      <!--Label-->
+              <td>{{results}}</td>                <!--Label-->
             </tr>
             {%endfor%}
 
