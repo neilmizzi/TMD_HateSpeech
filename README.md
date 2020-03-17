@@ -4,7 +4,7 @@
 This project contains code for the development and optimization of the hyperparameters of a LSTM for hatespeech recognition in tweets. The data used for training and testing is a combination of different datasets gathered from Kaggle. A different dataset of tweets scraped from multiple users was annotated and used for evaluation. The optimal LSTM framework was then used to run as backand on a web application for hatespeech recognition. 
 
 ## Prerequisites
-This code requires the installtion of the Python packages:
+This code requires the installation of the following Python packages:
 -   Keras
 -   Tensorflow
 -   Flask
