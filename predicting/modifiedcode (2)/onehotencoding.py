@@ -6,7 +6,6 @@ import string
 MAX_LENGTH = 280 #max lenght of a tweet
 CHARS = list(string.printable) #100
 
-
 def deal_with_unknown_characters(tweet):
 
     for char in tweet[:]:

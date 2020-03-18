@@ -60,7 +60,7 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
     return max_acc, best_options
 
 
-max_acc, best_options = run_experiments(PARAMETER_OPTIONS_DICT,10, 2,x_test,y_test)
+max_acc, best_options = run_experiments(PARAMETER_OPTIONS_DICT,10, 1,x_test,y_test)
 
 print(max_acc)
 

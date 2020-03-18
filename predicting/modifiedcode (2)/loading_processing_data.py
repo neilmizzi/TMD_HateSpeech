@@ -21,7 +21,7 @@ def map_to_ints(a_string):
 #LOADING
 
 # training and evaluation data
-TRAIN_DATA = pd.read_csv('datafiles/Data-Set 33_33_34.csv',sep = '\t')
+TRAIN_DATA = pd.read_csv('datafiles/Data-Set 20_20_60.csv',sep = '\t') #change this file to try different splits
 TRAIN_TWEETS = TRAIN_DATA['0'].astype(str).values # training data
 TRAIN_LABELS = TRAIN_DATA['1'].values
 TRAIN_UNIQUE_LABELS = set(TRAIN_LABELS)
