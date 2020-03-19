@@ -1,16 +1,17 @@
 from __future__ import print_function
 import pandas as pd
-from predicting.modifiedcode.onehotencoding import *
+import numpy as np
+from predicting.modifiedcode.onehotencoding import deal_with_unknown_characters, map_to_ints
 from keras.preprocessing import sequence
 from keras.models import load_model
-import tensorflow.compat.v1 as tf
-tf.disable_v2_behavior()
+import tensorflow as tf
+# tf.disable_v2_behavior()
 
 # load model
 def lstm_predictions():
-    DATA = pd.read_csv('data sets/labeled_data.csv')
+    DATA = pd.read_csv('datafiles/labeled_data.csv')
     LABELS = DATA['class'].values
-    UNIQUE_LABELS = set(LABELS)
+    _ = set(LABELS)     # Why does this line exist if we are not using the variable?
 
     DATA = pd.read_csv('tweets.csv')
     TWEETS = (DATA.loc[:, "tweet"]).tolist()
@@ -19,11 +20,12 @@ def lstm_predictions():
     integer_mapped_tweets = [map_to_ints(t) for t in TWEETS]
     preprocessedtweets = sequence.pad_sequences(integer_mapped_tweets, maxlen=maxlen)
 
-    model = load_model('data sets/model.h5', compile=False)
+    model = load_model('datafiles/model.h5', compile=False)
 
     predictions = model.predict_classes(preprocessedtweets)
 
     return predictions
+
 
 def restructure_results(array):
     predictions = array.tolist()

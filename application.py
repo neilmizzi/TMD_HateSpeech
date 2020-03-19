@@ -1,12 +1,11 @@
 from flask import Flask, redirect, url_for, request, render_template, abort
 import pandas as pd
-from classifierrun import *
+from classifierrun import lstm_predictions, restructure_results
 from twint_handler import TwintHandler
 app = Flask(__name__)
 
-"""
-   CLEARS CACHE
-"""
+
+# CLEAR CACHE
 @app.after_request
 def add_header(response):
     """
@@ -20,26 +19,15 @@ def add_header(response):
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
 
+
 @app.errorhandler(404)
 def page_not_found(error):
    return render_template('404.html', title = '404'), 404
 
+
 @app.route('/')
 def search_form():
    return render_template('search_form.html')
-
-
-def get_tweet_info():
-   df = pd.read_csv('Arkivji/trump.csv', sep=',')
-   urls = df.loc[:, "link"]
-   # tweetlist = []
-   #  for url in urls:
-   #      url = url.split('/')
-   #      tweetlist.append(url[-1])
-
-   tweet_text = df.loc[:, "tweet"]
-   return urls, tweet_text
-
 
 
 @app.route('/search_results',methods = ['POST', 'GET'])
