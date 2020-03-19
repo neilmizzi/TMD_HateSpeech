@@ -25,7 +25,7 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
     #overwritten iteratively
     max_acc = -1
 
-    for i in range(iterations):
+    for _ in range(iterations):
 
         learning_rate = hyper_parameter_options['learning_rate'][numpy.random.randint(0,len(hyper_parameter_options['learning_rate']))]
 
@@ -42,7 +42,7 @@ def run_experiments(hyper_parameter_options,iterations, iterations_per_setting, 
         model.initialise_model()
 
 
-        for i in range(iterations_per_setting): # statistical significance?
+        for _ in range(iterations_per_setting): # statistical significance?
             model.train_model(x_train,y_train,x_validation,y_validation)
             results = model.model.evaluate(test_x,test_y, verbose=1)
             acc = results[1]

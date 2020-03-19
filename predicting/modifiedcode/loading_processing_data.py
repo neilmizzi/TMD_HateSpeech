@@ -18,6 +18,11 @@ def map_to_ints(a_string):
         cleaned_up = deal_with_unknown_characters(a_string)
         return [integer_mapping[char] for char in cleaned_up]
 
+
+"""
+Can the below code be removed completely? We are only importing the above functions
+"""
+
 #LOADING
 
 # training and evaluation data
