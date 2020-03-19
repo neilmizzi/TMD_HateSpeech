@@ -8,6 +8,7 @@ This code requires the installation of the following Python packages:
 -   Keras
 -   Tensorflow
 -   Flask
+-   NLTK
 -   Pandas
 -   Twint
 
