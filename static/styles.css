@@ -116,11 +116,11 @@ input {
   }
   .form-style-8 input[type="button"],
   .form-style-8 input[type="submit"]{
-      -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
-      -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
-      box-shadow: inset 0px 1px 0px 0px #45D6D6;
-      background-color: #2CBBBB;
-      border: 1px solid #27A0A0;
+      -moz-box-shadow: inset 0px 1px 0px 0px #9ecae1;
+      -webkit-box-shadow: inset 0px 1px 0px 0px #9ecae1;
+      box-shadow: inset 0px 1px 0px 0px #9ecae1;
+      background-color: #6baed6;
+      border: 1px solid #9ecae1;
       display: inline-block;
       cursor: pointer;
       color: #FFFFFF;
@@ -132,8 +132,8 @@ input {
   }
   .form-style-8 input[type="button"]:hover,
   .form-style-8 input[type="submit"]:hover {
-      background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
-      background-color:#34CACA;
+      background:linear-gradient(to bottom, #9ecae1 5%, #9ecae1 100%);
+      background-color:#c6dbef;
   }
 
   table, th, td {
@@ -158,7 +158,7 @@ input {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #34CACA;
+    background-color: #c6dbef;
     color: white;
   }
 
@@ -169,4 +169,13 @@ input {
   #tweet iframe {
     border: none !important;
     box-shadow: none !important;
+  }
+
+  a{
+    color: #9ecae1
+  }
+
+  a :hover{
+      color: #9ec9e1a4;
+      text-decoration: none;
   }
