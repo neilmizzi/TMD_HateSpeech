@@ -2,6 +2,7 @@ from flask import Flask, redirect, url_for, request, render_template, abort
 import pandas as pd
 from classifierrun import lstm_predictions, restructure_results
 from twint_handler import TwintHandler
+from get_graph import get_chart
 app = Flask(__name__)
 
 
@@ -62,10 +63,14 @@ def search_results():
          results
          )
 
+      script, div = get_chart(results)
+
       return render_template(
          "search_results.html", 
          user = user,  
-         tweet_list = tweet_list
+         tweet_list = tweet_list,
+         script = script,
+         div = div
       )
 
    abort(404)
