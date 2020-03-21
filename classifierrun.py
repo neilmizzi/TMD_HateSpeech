@@ -4,8 +4,8 @@ import numpy as np
 from predicting.modifiedcode.onehotencoding import deal_with_unknown_characters, map_to_ints
 from keras.preprocessing import sequence
 from keras.models import load_model
-import tensorflow as tf
-# tf.disable_v2_behavior()
+
+# Please do not import tensorflow unnecessarily. Has severe impact on performance.
 
 # load model
 def lstm_predictions():
