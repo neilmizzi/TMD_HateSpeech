@@ -53,8 +53,7 @@ def search_results():
          abort(404)
 
       # TODO add flask visualization (bokeh pycharts etc)
-      classification = lstm_predictions()
-      results = restructure_results(classification)
+      results = lstm_predictions()
 
       tweet_list = zip(
          [i for i in range(len(tweet_text))],

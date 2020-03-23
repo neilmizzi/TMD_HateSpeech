@@ -24,15 +24,16 @@ def lstm_predictions():
 
     predictions = model.predict_classes(preprocessedtweets)
 
-    return predictions
+    results = restructure_results(predictions)
 
+    return results
 
 def restructure_results(array):
     predictions = array.tolist()
     returnlist = []
     for prediction in predictions:
         if prediction == 0:
-            returnlist.append('Hateful')
+            returnlist.append('Hate')
         if prediction == 1:
             returnlist.append('Offensive')
         if prediction == 2:

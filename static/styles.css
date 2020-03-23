@@ -139,6 +139,9 @@ input {
   table, th, td {
     table-layout:fixed;
   }
+  th {
+    cursor: pointer;
+  }
 
   #results {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
