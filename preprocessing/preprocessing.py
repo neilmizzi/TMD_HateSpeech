@@ -8,7 +8,6 @@ class PreProcessing:
     stop_words = set(stopwords.words('english'))
     ps = PorterStemmer()
 
-    # TODO Discuss levels of preprocessing to apply
     """
         INPUT:      TEXT STRING
         RETURNS:    STRING WITH PREPROCESSING APPLIED

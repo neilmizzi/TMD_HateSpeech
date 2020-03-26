@@ -52,7 +52,6 @@ def search_results():
       except Exception:
          abort(404)
 
-      # TODO add flask visualization (bokeh pycharts etc)
       results = lstm_predictions()
 
       tweet_list = zip(
