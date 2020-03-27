@@ -106,3 +106,5 @@ tweets.csv
 *.bin
 
 __pycache__/
+
+*.DS_Store
