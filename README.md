@@ -9,6 +9,7 @@ This code requires the installation of the following Python packages:
 -   Tensorflow
 -   Flask
 -   NLTK
+-   Bokeh
 -   Pandas
 -   Twint
 
@@ -18,7 +19,7 @@ This code requires the installation of the following Python packages:
 To start the optimization make sure that the data set is saved in the same directory as the code. If not adjust the path in "loading_processing_data.py" line 24 to the file location. Adjust the constant ITERATIONS in the tune_lstm.py file to the desired amount of iterations, then simply run the file.
 
 ## Application
-Running "application.py" will start a local web server, and the URL to access the website itself will be indicated in the log.
+Running application.py will start a local web server, and the URL to access the website itself will be indicated in the log.
 
 Going to the index page, you will be presented with the input form. The only required field is the username to scrape. The rest are optional and may be left out, but offer better limiting options to include or eliminate tweets of a certain age, or limit the total number of tweets to return.
 
