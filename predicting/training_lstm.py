@@ -11,23 +11,11 @@ x_train, x_test, y_train, y_test = train_test_split(integer_mapped_tweets, TRAIN
 #split train data again for validation data
 x_train, x_validation, y_train, y_validation = train_test_split(x_train,y_train,test_size=0.2, random_state=42)
 
-
-print(len(x_train))
-
 maxlen = 280
 #using keras padding
 x_train = sequence.pad_sequences(x_train, maxlen=maxlen)
 x_test = sequence.pad_sequences(x_test, maxlen=maxlen)
 x_validation = sequence.pad_sequences(x_validation,maxlen=maxlen)
-
-# remove to run on full data, used to quickly check outcomes
-# x_train = x_train[0:100]
-# x_test = x_test[0:10]
-# y_train = y_train[0:100]
-# y_test = y_test[0:10]
-#
-# x_validation = x_validation[0:10]
-# y_validation = y_validation[0:10]
 
 # check shapes
 def check_shapes():
@@ -39,26 +27,3 @@ def check_shapes():
     print(y_test.shape)
 
 check_shapes()
-
-
-def run_model():
-
-    # call model
-    lstm = LSTM_model(maxlen)
-    #intiliase
-    lstm.initialise_model()
-    #train
-    lstm.train_model(x_train,y_train,x_validation,y_validation)
-    #evaluate
-    lstm.evaluate_model(x_test,y_test)
-    #compile
-
-    #transform
-    prediction_data = ['this is dummy data','yes it is'] #paste here your prediction data as a list of strings
-
-    lstm.transform_prediction_data(prediction_data)
-
-    #get predictions
-    # scores, labels = lstm.predict_scores_and_labels()
-    #
-    # print(scores,labels)

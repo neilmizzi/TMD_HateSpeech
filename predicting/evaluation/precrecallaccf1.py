@@ -16,21 +16,16 @@ def get_accuracy(predicted, true):
 predictions = pd.read_csv(os.path.normpath('/Users/b2077/PycharmProjects/pleasework/TMD_HateSpeech/predicting/modifiedcode (2)/optimalsettingsXTEST_'))
 true = pd.read_csv(os.path.normpath('/Users/b2077/PycharmProjects/pleasework/TMD_HateSpeech/predicting/modifiedcode (2)/optimalsettingsXTEST_'))
 
-truee = true['True Labels'].values
+true_ = true['True Labels'].values
 predictions_ = predictions['Predictions'].values
 
-# data = pd.read_csv(os.path.normpath('C:/Users/Guido/Documents/Master AI/Year 1/Module 4/Text Mining Domains/Code'
-#                                    '/TMD_HateSpeech/predicting/svm_labels_self_annotated.csv'))
-# predictions = data.loc[:, 'Predictions']
-# true = data.loc[:, 'True Labels']
-
-precision = prfs(truee, predictions_)
-confusion_df = pd.DataFrame(confusion_matrix(truee, predictions_))
+precision = prfs(true_, predictions_)
+confusion_df = pd.DataFrame(confusion_matrix(true_, predictions_))
 x_axis_labels = ['Hate', 'Offensive', 'None'] # labels for x-axis
 y_axis_labels = ['Hate', 'Offensive', 'None'] # labels for y-axis
 heatmap = sns.heatmap(confusion_df, annot=True, fmt='g', cmap='Blues', xticklabels=x_axis_labels, yticklabels=y_axis_labels)
 
-print(get_accuracy(truee, predictions_))
+print(get_accuracy(true_, predictions_))
 print(confusion_df)
 print(precision)
 

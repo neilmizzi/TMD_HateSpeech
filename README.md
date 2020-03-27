@@ -17,6 +17,8 @@ This code requires the installation of the following Python packages:
 
 ## Classification
 To start the optimization make sure that the data set is saved in the same directory as the code. If not adjust the path in "loading_processing_data.py" line 24 to the file location. Adjust the constant ITERATIONS in the tune_lstm.py file to the desired amount of iterations, then simply run the file.
+In the file optimal_lstm you can baically create an LSTM class with your preferred settings.
+
 
 ## Application
 Running application.py will start a local web server, and the URL to access the website itself will be indicated in the log.

@@ -72,10 +72,13 @@ for i in range(1):
     classifier = svm.LinearSVC(loss='hinge', C=1.0)
     classifier.fit(x_train,y_train)
 
+    #use if wan to predict evaluation set
+
     # list_of_tweets_to_predict = TWEETS
     # embedded_tweets_to_predict, unknown_words_ = sentence_embedding(list_of_tweets_to_predict, word_embedding_model)
 
     predicted_labels = classifier.predict(x_test) # this is the array of predictions with the labels
+    # use if want to run multople times
     # score = prfs(y_test, predicted_labels)
     # scores.append(score)
     # accuracy = get_accuracy(predicted_labels, y_test)

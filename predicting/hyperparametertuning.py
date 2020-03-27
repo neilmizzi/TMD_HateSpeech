@@ -1,6 +1,7 @@
 import numpy
 from lstmclass import *
 
+#can add your parameter options here as you see fit
 PARAMETER_OPTIONS_DICT = {
     'learning_rate' : numpy.arange(0.001,0.25,0.003),
     'number_of_neurons' : [i for i in range(16,129,16)],
@@ -9,8 +10,6 @@ PARAMETER_OPTIONS_DICT = {
     # 'activation_functions' : ['tanh','softmax','relu'],
     # 'optimiser' : ['adam', 'rmsprop', 'adagrad']
 }
-
-print(PARAMETER_OPTIONS_DICT['learning_rate'][5])
 
 def run_experiments(hyper_parameter_options,iterations, test_x, test_y):
 
@@ -56,7 +55,3 @@ def run_experiments(hyper_parameter_options,iterations, test_x, test_y):
 
     return max_acc, best_options
 
-
-#
-# for  i in numpy.arange(0,5,0.01):
-#     print(i)

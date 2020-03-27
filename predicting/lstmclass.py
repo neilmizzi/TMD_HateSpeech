@@ -17,11 +17,11 @@ class LSTM_model:
                  loss_function='sparse_categorical_crossentropy',
                  learning_rate=0.001, maxlen = 280
                  ):
+        #these are standard settings
         self.n_neurons = n_neurons
         self.batch_size = batch_size
         self.epochs = epochs
         self.max_features = max_features
-        # self.input_dim = max_features
         self.input_length = input_length
         self.output_dim = output_dim
         self.biderectional = bidirectional
@@ -33,7 +33,6 @@ class LSTM_model:
         self.optimiser = keras.optimizers.rmsprop(learning_rate=learning_rate)
         self.model = Sequential()
         self.early_stopping = EarlyStopping(monitor='val_loss', mode=min, verbose=1, min_delta=0.05)
-        # self.model_check_point = ModelCheckpoint()
 
     def initialise_model(self):
         self.model.add(
