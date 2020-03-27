@@ -13,7 +13,7 @@ class LSTM_model:
     def __init__(self, max_features,n_neurons=50, batch_size=32,
                  epochs=5,
                  input_length=280, output_dim=128, bidirectional=True,
-                 drop_out=0.5, num_classes=3, activation_function='softmax',
+                 drop_out=0.2, num_classes=3, activation_function='softmax',
                  loss_function='sparse_categorical_crossentropy',
                  learning_rate=0.001, maxlen = 280
                  ):
@@ -40,17 +40,12 @@ class LSTM_model:
             Embedding(input_dim=self.max_features, input_length=self.input_length, output_dim=self.output_dim))
 
         if self.biderectional == False:
-            self.model.add(LSTM(128, dropout=0.2, recurrent_dropout=0.2))
-            self.model.add(LSTM(self.n_neurons, return_sequences=True, input_shape=(
-            MAX_LENGTH, len(CHARS))))  # MAXLENGTH AND CHARS are constants from the onehotencoding.py
-            self.model.add(LSTM(self.n_neurons,
-                                return_sequences=True))  # MAXLENGTH AND CHARS are constants from the onehotencoding.py
-            self.model.add(Dropout(.2))
-            self.model.add(Flatten())
+            self.model.add(LSTM(128, dropout=self.drop_out, recurrent_dropout=self.drop_out))
+            self. model.add(Dense(3, activation='softmax'))  # 3 refers to the number of categories
 
         else:
-            self.model.add(Bidirectional(LSTM(64)))
-            self.model.add(Dropout(0.5))
+            self.model.add(Bidirectional(LSTM(self.n_neurons)))
+            self.model.add(Dropout(self.drop_out))
 
         self.model.add(
             Dense(self.num_classes, activation=self.activation_function))  # 3 refers to the number of categories
@@ -58,9 +53,15 @@ class LSTM_model:
         self.model.summary()
 
     def train_model(self,x_train,y_train,x_validation, y_validation):
-        self.model.fit(x_train, y_train, batch_size=self.batch_size, epochs=self.epochs,
-                       validation_data=(x_validation, y_validation),
-                       callbacks=[self.early_stopping])
+        if self.biderectional == True:
+            self.model.fit(x_train, y_train, batch_size=self.batch_size, epochs=self.epochs,
+                           validation_data=(x_validation, y_validation),
+                           callbacks=[self.early_stopping])
+        else:
+            self.model.fit(x_train, y_train, batch_size=self.batch_size, epochs=self.epochs,
+                           validation_data=(x_validation, y_validation),
+                           )
+
 
     def evaluate_model(self, test_x, test_y):
         self.scores = self.model.evaluate(test_x, test_y, verbose=1)
@@ -73,6 +74,10 @@ class LSTM_model:
 
     def predict_scraped_data_labels_scores(self):
         labels = self.model.predict_classes(self.prediction_data)
+        return labels
+
+    def test_set_label_predictions(self,data):
+        labels = self.model.predict_classes(data)
         return labels
 
     def predict_scraped_data_scores(self):

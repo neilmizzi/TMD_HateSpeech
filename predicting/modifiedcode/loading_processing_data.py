@@ -18,15 +18,10 @@ def map_to_ints(a_string):
         cleaned_up = deal_with_unknown_characters(a_string)
         return [integer_mapping[char] for char in cleaned_up]
 
-
-"""
-Can the below code be removed completely? We are only importing the above functions
-"""
-
 #LOADING
 
 # training and evaluation data
-TRAIN_DATA = pd.read_csv('datafiles/Data-Set 20_20_60.csv',sep = '\t') #change this file to try different splits
+TRAIN_DATA = pd.read_csv('datafiles/Data-Set 33_33_34.csv',sep = '\t') #change this file to try different splits
 TRAIN_TWEETS = TRAIN_DATA['0'].astype(str).values # training data
 TRAIN_LABELS = TRAIN_DATA['1'].values
 TRAIN_UNIQUE_LABELS = set(TRAIN_LABELS)

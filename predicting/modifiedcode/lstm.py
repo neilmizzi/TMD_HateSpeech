@@ -9,7 +9,6 @@ import h5py
 import numpy
 # from hyperparametertuning import *
 
-
 # training and evaluation data
 TRAIN_DATA = pd.read_csv('/Users/b2077/PycharmProjects/pleasework/TMD_HateSpeech/data sets/Data-Set 33_33_34.csv',sep = '\t')
 TRAIN_TWEETS = TRAIN_DATA['0'].astype(str).values # training data
